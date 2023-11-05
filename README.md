@@ -1,0 +1,15 @@
+## Cifrador de Grain: Protege tus imágenes con seguridad avanzada
+
+Este proyecto se enfoca en la seguridad de tus imágenes mediante la implementación del algoritmo de Grain v1.
+
+El algoritmo de Grain es una técnica de cifrado en flujo a nivel de bits que se ha destacado por su robustez desde su presentación en el proyecto eSTREAM en 2005, donde ganó un lugar destacado. Fue diseñado para funcionar eficientemente en sistemas con recursos limitados, lo que lo hace ideal para aplicaciones con restricciones de hardware.
+
+Una de las características más notables de Grain es su resistencia a los ataques. Hasta la fecha, el ataque más eficaz conocido contra Grain es la fuerza bruta, que implica probar todas las posibles claves hasta encontrar la correcta. Esto se traduce en una complejidad computacional extrema, que requiere un esfuerzo computacional de al menos 2^80, lo que lo convierte en una opción altamente segura.
+
+La versión Grain v1 es una evolución que ha mejorado aún más la seguridad. Ha sido diseñado con dos bloques de desplazamiento: uno con retroalimentación lineal y otro con retroalimentación no lineal. Cada uno de estos bloques utiliza funciones de retroalimentación diferenciadas para mantener la robustez del cifrado. También incorpora funciones de actualización que eliminan posibles ambigüedades, una función de filtro y una función de salida para fortalecer su seguridad.
+
+Grain v1 utiliza una clave de 80 bits (equivalente a 10 caracteres) y una semilla o vector de inicialización de 64 bits (8 caracteres). Durante la fase de inicialización, se carga el Registro de Desplazamiento con Retroalimentación No Lineal (NFSR) con la clave, mientras que el Registro de Desplazamiento con Retroalimentación Lineal (LFSR) se carga con la semilla y 16 unos. En las primeras 160 iteraciones, no se genera el flujo de clave y la salida se somete a operaciones XOR con los registros de desplazamiento y sus respectivas retroalimentaciones.
+
+La generación del flujo de clave se lleva a cabo al xorear 7 bits del NFSR con el resultado de la función de salida. Esta función de salida realiza una combinación compleja de bits de ambos registros de desplazamiento. En cada ciclo de reloj, se realiza una retroalimentación de los registros, se corrigen posibles ambigüedades, se proporciona un bit del flujo de clave y se desplaza cada bit. Con hardware adicional y una simplificación de las funciones de retroalimentación, es posible aumentar la eficiencia en un factor k.
+
+El cifrado se realiza de manera incremental, lo que significa que se convierte el texto plano en texto cifrado bit a bit. Esto se logra combinando el flujo de clave generado por Grain con los datos originales utilizando una operación lógica XOR. Si el flujo de clave es seguro, los datos cifrados resultantes también lo serán. En resumen, Grain v1 es una elección segura y confiable para proteger tus imágenes con cifrado avanzado.
